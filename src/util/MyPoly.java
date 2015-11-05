@@ -185,13 +185,14 @@ public class MyPoly extends Polygon {
 
 	public boolean intersects(Polygon p) {
 
-		if (intersectsCenter(p)) {
+		if (intersectsSimple(p)) {
 			return true;
 		}
 
 		return intersetsEdges(p);
 	}
 
+	@SuppressWarnings("unused")
 	private boolean intersectsCenter(Polygon p) {
 
 		MyPoint otherCenter = getCenter(p);

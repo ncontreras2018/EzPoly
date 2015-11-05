@@ -27,9 +27,9 @@ public class MyPanel extends JPanel {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		p = new MyPoly(100, 400, 3, 100);
+		p = new MyPoly(100, 400, 3, 140);
 
-		p2 = new MyPoly(1300, 350, 7, 120);
+		p2 = new MyPoly(1300, 350, 7, 205);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class MyPanel extends JPanel {
 
 		p.translate(1, 0);
 
-		p.rotateDegrees(3);
+		p.rotateDegrees(3.5);
 
 		p2.translate(-2, 0);
 
