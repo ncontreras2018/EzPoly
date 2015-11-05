@@ -27,9 +27,11 @@ public class MyPanel extends JPanel {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		p = new MyPoly(100, 400, 3, 140);
+		p = new MyPoly(100, 400, MyPoly.CIRCLE_LOW_DEF, 500);
 
-		p2 = new MyPoly(1300, 350, 7, 205);
+		p2 = new MyPoly(1300, 300, MyPoly.CRECENT_MOON, 120);
+		
+		System.out.println(p2);
 	}
 
 	@Override
@@ -58,10 +60,10 @@ public class MyPanel extends JPanel {
 
 		g2d.fill(p2);
 		
-		g2d.setColor(Color.YELLOW);
-		
-		g2d.fillOval(p.getCenter().x() - 3, p.getCenter().y() - 3, 6, 6);
-		
-		g2d.fillOval(p2.getCenter().x() - 3, p2.getCenter().y() - 3, 6, 6);
+//		g2d.setColor(Color.YELLOW);
+//		
+//		g2d.fillOval(p.getCenter().x() - 3, p.getCenter().y() - 3, 6, 6);
+//		
+//		g2d.fillOval(p2.getCenter().x() - 3, p2.getCenter().y() - 3, 6, 6);
 	}
 }

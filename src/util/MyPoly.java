@@ -1,4 +1,5 @@
 package util;
+
 import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
@@ -9,10 +10,60 @@ import java.awt.geom.Rectangle2D;
 @SuppressWarnings("serial")
 public class MyPoly extends Polygon {
 
+	public static final short CIRCLE_LOW_DEF = 1, CIRCLE = 2,
+			CIRCLE_HIGH_DEF = 3, CRECENT_MOON = 4;
+
 	private MyPoint[] points;
 
 	public MyPoly() {
 
+	}
+
+	public MyPoly(int x, int y, short PREDEFINED_SHAPE, double radius) {
+
+		this();
+
+		switch (PREDEFINED_SHAPE) {
+
+		case (CIRCLE_LOW_DEF):
+			setUpPoly(x, y, (int) radius / 4, radius);
+			break;
+
+		case (CIRCLE):
+			setUpPoly(x, y, (int) radius, radius);
+			break;
+
+		case (CIRCLE_HIGH_DEF):
+			setUpPoly(x, y, (int) radius * 4, radius);
+			break;
+
+		case (CRECENT_MOON):
+
+			int moonSides = 100;
+
+			setUpPoly(x, y, moonSides, radius);
+
+			MyPoint center = getCenter();
+
+			MyPoint[] newPoints = new MyPoint[moonSides];
+
+			for (int i = 0; i < moonSides; i++) {
+
+				MyPoint cur = points[i];
+
+				if (cur.getY() > center.getY()) {
+
+					double yDistToCenter = center.getY() - cur.getY();
+
+					cur.translate(0, 1.5 * yDistToCenter);
+
+					newPoints[i] = cur;
+				} else {
+					newPoints[i] = cur;
+				}
+			}
+			setPoints(newPoints);
+		}
 	}
 
 	public MyPoly(MyPoint[] points) {
@@ -26,7 +77,10 @@ public class MyPoly extends Polygon {
 	}
 
 	public MyPoly(int xPos, int yPos, int sides, double radius) {
+		setUpPoly(xPos, yPos, sides, radius);
+	}
 
+	private void setUpPoly(int x, int y, int sides, double radius) {
 		points = new MyPoint[sides];
 
 		double fullCircle = Math.PI * 2;
@@ -46,10 +100,9 @@ public class MyPoly extends Polygon {
 
 		adjustSuperPoints();
 
-		translate(xPos, yPos);
+		translate(x, y);
 
 		adjustSuperPoints();
-
 	}
 
 	public MyPoint getCenter() {
