@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
 public class MyPoly extends Polygon {
 
 	public static final short CIRCLE_LOW_DEF = 1, CIRCLE = 2,
-			CIRCLE_HIGH_DEF = 3, CRECENT_MOON = 4;
+			CIRCLE_HIGH_DEF = 3, CRECENT_MOON = 4, FIVE_POINT_STAR = 5;
 
 	private MyPoint[] points;
 
@@ -58,11 +58,34 @@ public class MyPoly extends Polygon {
 					cur.translate(0, 1.5 * yDistToCenter);
 
 					newPoints[i] = cur;
-				} else {
-					newPoints[i] = cur;
 				}
+				newPoints[i] = cur;
 			}
 			setPoints(newPoints);
+			break;
+
+		case (FIVE_POINT_STAR):
+			setUpPoly(x, y, 10, radius);
+
+			MyPoint[] starPoints = new MyPoint[npoints];
+
+			MyPoint starCenter = getCenter();
+
+			for (int i = 0; i < npoints; i++) {
+
+				MyPoint curPoint = points[i];
+
+				if (i % 2 == 0) {
+
+					double xDist = curPoint.getX() - starCenter.getX();
+					double yDist = curPoint.getY() - starCenter.getY();
+
+					curPoint.translate(xDist, yDist);
+				}
+				starPoints[i] = curPoint;
+			}
+			setPoints(starPoints);
+			break;
 		}
 	}
 

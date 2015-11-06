@@ -22,7 +22,7 @@ public class Test extends Thread {
 			p.repaint();
 			
 			try {
-				Thread.sleep(1);
+				Thread.sleep(15);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
