@@ -15,6 +15,8 @@ public class MyPoly extends Polygon {
 
 	private MyPoint[] points;
 
+	private double angle;
+
 	public MyPoly() {
 
 	}
@@ -140,6 +142,10 @@ public class MyPoly extends Polygon {
 
 		return center;
 	}
+	
+	public double getAngle() {
+		return angle;
+	}
 
 	private MyPoint getCenter(Polygon p) {
 
@@ -156,14 +162,33 @@ public class MyPoly extends Polygon {
 		return center;
 	}
 
+	public void moveTo(double x, double y) {
+
+		MyPoint loc = getCenter();
+
+		translate(x - loc.getX(), y - loc.getY());
+	}
+
 	@Override
 	public void translate(int deltaX, int deltaY) {
+		translate(deltaX + 0.0, deltaY + 0.0);
+	}
+
+	public void translate(double deltaX, double deltaY) {
 
 		for (int i = 0; i < npoints; i++) {
 			points[i].translate(deltaX, deltaY);
 		}
 
 		adjustSuperPoints();
+
+	}
+
+	public void setAngle(double angle) {
+
+		rotateRadians(-this.angle + angle);
+		
+		this.angle = angle;
 
 	}
 
@@ -190,6 +215,8 @@ public class MyPoly extends Polygon {
 		}
 
 		adjustSuperPoints();
+
+		angle += angle;
 
 	}
 

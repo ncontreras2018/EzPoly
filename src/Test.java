@@ -3,7 +3,7 @@ import util.MyPanel;
 
 public class Test extends Thread {
 
-	MyPanel p;
+	private MyPanel p;
 
 	public static void main(String[] args) {
 		new Test();

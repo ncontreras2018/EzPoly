@@ -13,7 +13,7 @@ public class MyPanel extends JPanel {
 
 	private JFrame frame;
 
-	MyPoly p, p2;
+	private MyPoly p, p2;
 
 	public MyPanel(int width, int height) {
 		frame = new JFrame();
@@ -36,7 +36,7 @@ public class MyPanel extends JPanel {
 
 		p2 = new MyPoly(1300, 300, MyPoly.FIVE_POINT_STAR, 120);
 
-		System.out.println(p2);
+		System.out.println(p);
 	}
 
 	@Override
