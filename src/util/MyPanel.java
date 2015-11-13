@@ -13,7 +13,7 @@ public class MyPanel extends JPanel {
 
 	private JFrame frame;
 
-	private MyPoly p, p2;
+	private EzPoly p, p2;
 
 	public MyPanel(int width, int height) {
 		frame = new JFrame();
@@ -28,13 +28,13 @@ public class MyPanel extends JPanel {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		MyPoint[] points = new MyPoint[] { new MyPoint(100, 100),
-				new MyPoint(200, 100), new MyPoint(100, 200),
-				new MyPoint(200, 200) };
+		PrecisePoint[] points = new PrecisePoint[] { new PrecisePoint(100, 100),
+				new PrecisePoint(200, 100), new PrecisePoint(100, 200),
+				new PrecisePoint(200, 200) };
 
-		p = new MyPoly(points);
+		p = new EzPoly(points);
 
-		p2 = new MyPoly(1300, 300, MyPoly.FIVE_POINT_STAR, 120);
+		p2 = new EzPoly(1300, 300, EzPoly.FIVE_POINT_STAR, 120);
 
 		System.out.println(p);
 	}

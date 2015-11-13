@@ -2,15 +2,15 @@ package util;
 import java.awt.geom.Point2D;
 
 
-public class MyPoint extends Point2D {
+public class PrecisePoint extends Point2D {
 	
 	private double x, y;
 	
-	public MyPoint() {
+	public PrecisePoint() {
 		
 	}
 	
-	public MyPoint(double x, double y) {
+	public PrecisePoint(double x, double y) {
 		setLocation(x, y);
 	}
 	

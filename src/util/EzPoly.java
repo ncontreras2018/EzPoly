@@ -8,20 +8,20 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 @SuppressWarnings("serial")
-public class MyPoly extends Polygon {
+public class EzPoly extends Polygon {
 
 	public static final short CIRCLE_LOW_DEF = 1, CIRCLE = 2,
 			CIRCLE_HIGH_DEF = 3, CRECENT_MOON = 4, FIVE_POINT_STAR = 5;
 
-	private MyPoint[] points;
+	private PrecisePoint[] points;
 
 	private double angle;
 
-	public MyPoly() {
+	public EzPoly() {
 
 	}
 
-	public MyPoly(int x, int y, short PREDEFINED_SHAPE, double radius) {
+	public EzPoly(int x, int y, short PREDEFINED_SHAPE, double radius) {
 
 		this();
 
@@ -45,13 +45,13 @@ public class MyPoly extends Polygon {
 
 			setUpPoly(x, y, moonSides, radius);
 
-			MyPoint center = getCenter();
+			PrecisePoint center = getCenter();
 
-			MyPoint[] newPoints = new MyPoint[moonSides];
+			PrecisePoint[] newPoints = new PrecisePoint[moonSides];
 
 			for (int i = 0; i < moonSides; i++) {
 
-				MyPoint cur = points[i];
+				PrecisePoint cur = points[i];
 
 				if (cur.getY() > center.getY()) {
 
@@ -69,13 +69,13 @@ public class MyPoly extends Polygon {
 		case (FIVE_POINT_STAR):
 			setUpPoly(x, y, 10, radius);
 
-			MyPoint[] starPoints = new MyPoint[npoints];
+			PrecisePoint[] starPoints = new PrecisePoint[npoints];
 
-			MyPoint starCenter = getCenter();
+			PrecisePoint starCenter = getCenter();
 
 			for (int i = 0; i < npoints; i++) {
 
-				MyPoint curPoint = points[i];
+				PrecisePoint curPoint = points[i];
 
 				if (i % 2 == 0) {
 
@@ -91,22 +91,22 @@ public class MyPoly extends Polygon {
 		}
 	}
 
-	public MyPoly(MyPoint[] points) {
+	public EzPoly(PrecisePoint[] points) {
 		this.points = points;
 
 		adjustSuperPoints();
 	}
 
-	public MyPoly(int sides, double radius) {
+	public EzPoly(int sides, double radius) {
 		this(0, 0, sides, radius);
 	}
 
-	public MyPoly(int xPos, int yPos, int sides, double radius) {
+	public EzPoly(int xPos, int yPos, int sides, double radius) {
 		setUpPoly(xPos, yPos, sides, radius);
 	}
 
 	private void setUpPoly(int x, int y, int sides, double radius) {
-		points = new MyPoint[sides];
+		points = new PrecisePoint[sides];
 
 		double fullCircle = Math.PI * 2;
 
@@ -116,7 +116,7 @@ public class MyPoly extends Polygon {
 
 		for (int i = 0; i < sides; i++) {
 
-			points[i] = new MyPoint(Math.cos(curAngle) * radius,
+			points[i] = new PrecisePoint(Math.cos(curAngle) * radius,
 					Math.sin(curAngle) * radius);
 
 			curAngle += interval;
@@ -130,11 +130,11 @@ public class MyPoly extends Polygon {
 		adjustSuperPoints();
 	}
 
-	public MyPoint getCenter() {
+	public PrecisePoint getCenter() {
 
-		MyPoint center = new MyPoint(0, 0);
+		PrecisePoint center = new PrecisePoint(0, 0);
 
-		for (MyPoint p : points) {
+		for (PrecisePoint p : points) {
 			center.translate(p.getX(), p.getY());
 		}
 
@@ -147,13 +147,13 @@ public class MyPoly extends Polygon {
 		return angle;
 	}
 
-	private MyPoint getCenter(Polygon p) {
+	private PrecisePoint getCenter(Polygon p) {
 
-		MyPoint[] otherPoints = getPoints(p);
+		PrecisePoint[] otherPoints = getPoints(p);
 
-		MyPoint center = new MyPoint(0, 0);
+		PrecisePoint center = new PrecisePoint(0, 0);
 
-		for (MyPoint cur : otherPoints) {
+		for (PrecisePoint cur : otherPoints) {
 			center.translate(cur.getX(), cur.getY());
 		}
 
@@ -164,7 +164,7 @@ public class MyPoly extends Polygon {
 
 	public void moveTo(double x, double y) {
 
-		MyPoint loc = getCenter();
+		PrecisePoint loc = getCenter();
 
 		translate(x - loc.getX(), y - loc.getY());
 	}
@@ -198,7 +198,7 @@ public class MyPoly extends Polygon {
 
 	public void rotateRadians(double angle) {
 
-		MyPoint center = getCenter();
+		PrecisePoint center = getCenter();
 
 		AffineTransform at = new AffineTransform();
 
@@ -211,7 +211,7 @@ public class MyPoly extends Polygon {
 		for (int i = 0; i < npoints; i++) {
 			Point2D cur = newPoints[i];
 
-			points[i] = new MyPoint(cur.getX(), cur.getY());
+			points[i] = new PrecisePoint(cur.getX(), cur.getY());
 		}
 
 		adjustSuperPoints();
@@ -222,7 +222,7 @@ public class MyPoly extends Polygon {
 
 	public void scale(double sx, double sy) {
 
-		MyPoint center = getCenter();
+		PrecisePoint center = getCenter();
 
 		AffineTransform at = new AffineTransform();
 
@@ -239,7 +239,7 @@ public class MyPoly extends Polygon {
 		for (int i = 0; i < npoints; i++) {
 			Point2D cur = newPoints[i];
 
-			points[i] = new MyPoint(cur.getX(), cur.getY());
+			points[i] = new PrecisePoint(cur.getX(), cur.getY());
 		}
 
 		adjustSuperPoints();
@@ -263,24 +263,24 @@ public class MyPoly extends Polygon {
 
 	}
 
-	private MyPoint[] getPoints(Polygon p) {
-		if (p instanceof MyPoly) {
-			return ((MyPoly) p).getPoints();
+	private PrecisePoint[] getPoints(Polygon p) {
+		if (p instanceof EzPoly) {
+			return ((EzPoly) p).getPoints();
 		}
 
-		MyPoint[] toReturn = new MyPoint[p.npoints];
+		PrecisePoint[] toReturn = new PrecisePoint[p.npoints];
 
 		for (int i = 0; i < p.npoints; i++) {
-			toReturn[i] = new MyPoint(p.xpoints[i], p.ypoints[i]);
+			toReturn[i] = new PrecisePoint(p.xpoints[i], p.ypoints[i]);
 		}
 		return toReturn;
 	}
 
-	public MyPoint[] getPoints() {
+	public PrecisePoint[] getPoints() {
 		return points;
 	}
 
-	public void setPoints(MyPoint[] points) {
+	public void setPoints(PrecisePoint[] points) {
 		this.points = points;
 
 		adjustSuperPoints();
@@ -298,14 +298,14 @@ public class MyPoly extends Polygon {
 	@SuppressWarnings("unused")
 	private boolean intersectsCenter(Polygon p) {
 
-		MyPoint otherCenter = getCenter(p);
+		PrecisePoint otherCenter = getCenter(p);
 
 		return contains(otherCenter) || p.contains(getCenter());
 	}
 
 	private boolean intersetsEdges(Polygon p) {
 
-		MyPoint[][] myEdges = new MyPoint[npoints][2];
+		PrecisePoint[][] myEdges = new PrecisePoint[npoints][2];
 
 		for (int i = 0; i < npoints; i++) {
 
@@ -315,9 +315,9 @@ public class MyPoly extends Polygon {
 
 		}
 
-		MyPoint[][] otherEdges = new MyPoint[p.npoints][2];
+		PrecisePoint[][] otherEdges = new PrecisePoint[p.npoints][2];
 
-		MyPoint[] otherPoints = getPoints(p);
+		PrecisePoint[] otherPoints = getPoints(p);
 
 		for (int i = 0; i < p.npoints; i++) {
 
@@ -357,9 +357,9 @@ public class MyPoly extends Polygon {
 
 		double largestRadius = 0;
 
-		MyPoint center = getCenter();
+		PrecisePoint center = getCenter();
 
-		for (MyPoint curPoint : points) {
+		for (PrecisePoint curPoint : points) {
 			if (center.distance(curPoint) > largestRadius) {
 				largestRadius = center.distance(curPoint);
 			}
@@ -371,7 +371,7 @@ public class MyPoly extends Polygon {
 			double ranY = center.getY() - largestRadius
 					+ (Math.random() * 2 * largestRadius);
 
-			MyPoint ranPoint = new MyPoint(ranX, ranY);
+			PrecisePoint ranPoint = new PrecisePoint(ranX, ranY);
 
 			if (this.contains(ranPoint)) {
 				if (p.contains(ranPoint)) {
@@ -390,7 +390,7 @@ public class MyPoly extends Polygon {
 			return true;
 		}
 
-		MyPoint center = getCenter();
+		PrecisePoint center = getCenter();
 
 		for (int i = 0; i < npoints; i++) {
 
@@ -400,7 +400,7 @@ public class MyPoly extends Polygon {
 			xStep /= center.distance(points[i]);
 			yStep /= center.distance(points[i]);
 
-			MyPoint testPoint = center;
+			PrecisePoint testPoint = center;
 
 			while (true) {
 
@@ -430,7 +430,7 @@ public class MyPoly extends Polygon {
 
 		while (!myPI.isDone()) {
 
-			MyPoint point = new MyPoint(cur[0], cur[1]);
+			PrecisePoint point = new PrecisePoint(cur[0], cur[1]);
 
 			if (p.contains(point)) {
 				return true;
@@ -447,7 +447,7 @@ public class MyPoly extends Polygon {
 
 		while (!otherPI.isDone()) {
 
-			MyPoint point = new MyPoint(cur[0], cur[1]);
+			PrecisePoint point = new PrecisePoint(cur[0], cur[1]);
 
 			if (this.contains(point)) {
 				return true;
@@ -468,7 +468,7 @@ public class MyPoly extends Polygon {
 
 		toReturn += " Points:[ ";
 
-		for (MyPoint p : points) {
+		for (PrecisePoint p : points) {
 			toReturn += p.toString() + ", ";
 		}
 
